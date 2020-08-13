@@ -1,7 +1,7 @@
 {
   "name": "eMia",
   "version": "0.1.1",
-  "description": "eMia React Native server side",
+  "description": "eMia React Native. Server side",
   "main": "app.js",
   "author": "Sergey Krotkih <sergey.krotkih@gmail.com>",
   "license": "ISC",

@@ -12,10 +12,10 @@ router.post('/generate', auth, async (req, res) => {
 
     const code = shortid.generate()
 
-    const existing = await Link.findOne({ from })
+    const existing = await Post.findOne({ from })
 
     if (existing) {
-      return res.json({ link: existing })
+      return res.json({ post: existing })
     }
 
     const to = baseUrl + '/t/' + code
@@ -32,15 +32,17 @@ router.post('/generate', auth, async (req, res) => {
   }
 })
 
+// Get all posts by user's Id
 router.get('/', auth, async (req, res) => {
   try {
-    const links = await Post.find({ owner: req.user.userId })
-    res.json(links)
+    const usersPosts = await Post.find({ owner: req.user.userId })
+    res.json(usersPosts)
   } catch (e) {
     res.status(500).json({ message: 'Something went wrong. Please try it again.' })
   }
 })
 
+// Get Post by post Id
 router.get('/:id', auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)

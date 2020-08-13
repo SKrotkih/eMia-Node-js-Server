@@ -9,11 +9,18 @@ const router = Router()
 // npm run startserver
 // http://localhost:5000/api/auth/test
 router.get(
-  '/test',
+  '/users',
   [],
   async (req, res) => {
     try {
-      res.json({result: 'OK', userId: '001111'})
+
+      const users = await User.find();
+      let ids = [];
+      users.forEach((user) => {
+        ids.push({id: user['_id']});
+      })
+
+      res.json(ids)
     } catch (e) {
       res.status(500).json({message: 'Something went wrong. Please try it again.'})
     }
@@ -50,11 +57,18 @@ router.post(
     const hashedPassword = await bcrypt.hash(password, 12)
     const user = new User({ email, password: hashedPassword })
 
+    console.log(`REGISTER: ${email}; ${password}`);
+
     await user.save()
+
+    console.log(`REGISTER: 201 The User is registered successfully`);
 
     res.status(201).json({ message: 'The User is registered successfully' })
 
   } catch (e) {
+
+    console.log(`REGISTER: 500 Something went wrong. Please ry it again.`);
+
     res.status(500).json({ message: 'Something went wrong. Please ry it again.' })
   }
 })
@@ -81,13 +95,21 @@ router.post(
 
     const user = await User.findOne({ email })
 
+    console.log(`LOGIN: ${email}; ${password}`);
+
     if (!user) {
+
+      console.log('LOGIN: 400. The User is not found');
+
       return res.status(400).json({ message: 'The User is not found' })
     }
 
     const isMatch = await bcrypt.compare(password, user.password)
 
     if (!isMatch) {
+
+      console.log('LOGIN: 400. The password is wrong. Please try it again.');
+
       return res.status(400).json({ message: 'The password is wrong. Please try it again.' })
     }
 
@@ -97,9 +119,14 @@ router.post(
       { expiresIn: '1h' }
     )
 
-    res.json({ token, userId: user.id })
+    console.log(`LOGIN. user= ${user}: token: ${token}`);
+
+    res.status(200).json({ user: user, token })
 
   } catch (e) {
+
+    console.log(e);
+
     res.status(500).json({ message: 'Something went wrong. Please try it again.' })
   }
 })
