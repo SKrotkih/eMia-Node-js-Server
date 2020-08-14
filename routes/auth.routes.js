@@ -17,7 +17,7 @@ router.get(
       const users = await User.find();
       let ids = [];
       users.forEach((user) => {
-        ids.push({id: user['_id']});
+        ids.push({id: user});
       })
 
       res.json(ids)
@@ -61,9 +61,15 @@ router.post(
 
     await user.save()
 
-    console.log(`REGISTER: 201 The User is registered successfully`);
+    const token = jwt.sign(
+      { userId: user.id },
+      config.get('jwtSecret'),
+      { expiresIn: '1h' }
+    )
 
-    res.status(201).json({ message: 'The User is registered successfully' })
+    console.log(`REGISTER: 200 The User is registered successfully: ${JSON.stringify(user) }`);
+
+    res.status(200).json({ uid: user.id, email, token })
 
   } catch (e) {
 
