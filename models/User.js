@@ -5,7 +5,6 @@ const schema = new Schema({
   address: {type: String},
   email: {type: String},
   gender: {type: Number},
-  uid: {type: String},
   tokenAndroid: {type: String},
   tokenIOS: {type: String},
   username: {type: String},

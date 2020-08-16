@@ -9,7 +9,7 @@ const router = Router()
 // npm run startserver
 // http://localhost:5000/api/auth/test
 router.get(
-  '/users',
+  '/test',
   [],
   async (req, res) => {
     try {
