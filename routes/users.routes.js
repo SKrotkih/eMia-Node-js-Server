@@ -26,16 +26,14 @@ router.post(
   [],
   async (req, res) => {
     try {
-
       const {user} = req.body
 
       if (user === undefined) {
         return res.status(400).json({ message: 'User data is not presented' })
       }
+      await User.updateOne({"_id": user._id}, user)
 
-      await user.save()
-
-      console.log(`REGISTER: 200 The User is saved successfully: ${JSON.stringify(user) }`);
+      console.log(`Code: 200. The User was updated successfully. New data: ${JSON.stringify(user) }`);
 
       res.status(200).json(user)
 
