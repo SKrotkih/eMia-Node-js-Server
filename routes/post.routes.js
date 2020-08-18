@@ -5,48 +5,61 @@ const Post = require('../models/Post')
 const auth = require('../middleware/auth.middleware')
 const router = Router()
 
-router.post('/generate', auth, async (req, res) => {
+// Get all posts
+// TODO: add auth parameter ', auth'. Should be:
+// router.get('/posts', auth, async (req, res) => {
+router.get('/posts', async (req, res) => {
   try {
-    const baseUrl = config.get('baseUrl')
-    const {from} = req.body
 
-    const code = shortid.generate()
+    console.log("allPosts request");
 
-    const existing = await Post.findOne({ from })
+    const allPosts = await Post.find({})
 
-    if (existing) {
-      return res.json({ post: existing })
-    }
+    console.log("allPosts", allPosts);
 
-    const to = baseUrl + '/t/' + code
-
-    const post = new Post({
-      code, to, from, owner: req.user.userId
-    })
-
-    await post.save()
-
-    res.status(201).json({ post })
+    res.status(200).json(allPosts)
   } catch (e) {
     res.status(500).json({ message: 'Something went wrong. Please try it again.' })
   }
 })
 
-// Get all posts by user's Id
-router.get('/', auth, async (req, res) => {
+router.post('/post', async (req, res) => {
+  try {
+    console.log("add post");
+
+    const {post} = req.body
+
+    console.log(post);
+
+    const postObj = new Post(post);
+
+    console.log(postObj);
+
+    await postObj.save();
+
+    console.log("SAVED!!!");
+
+    res.status(200).json({ postObj })
+  } catch (e) {
+    res.status(500).json({ message: '//post request: something went wrong. Please try it again.' })
+  }
+})
+
+// Get all posts for user Id
+router.get('/', async (req, res) => {
   try {
     const usersPosts = await Post.find({ owner: req.user.userId })
-    res.json(usersPosts)
+    res.status(200).json(usersPosts)
   } catch (e) {
     res.status(500).json({ message: 'Something went wrong. Please try it again.' })
   }
 })
 
 // Get Post by post Id
-router.get('/:id', auth, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
-    res.json(post)
+    res.status(200).json(post)
   } catch (e) {
     res.status(500).json({ message: 'Something went wrong. Please try it again.' })
   }
