@@ -7,6 +7,6 @@ const schema = new Schema({
   pictureUri: {type: String},
   uid: {type: String},
   owner: {type: Types.ObjectId, ref: 'User'}
-})
+}, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
 
 module.exports = model('Post', schema)

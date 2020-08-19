@@ -10,9 +10,18 @@ router.get('/posts', async (req, res) => {
     const allPosts = await Post.find({})
     res.status(200).json(allPosts)
   } catch (error) {
-
     console.log('500', error);
+    res.status(500).json({ message: `${error}` })
+  }
+})
 
+router.get('/posts/:uid', async (req, res) => {
+  try {
+    const uid = req.params.uid;
+    const allPosts = await Post.find({uid: uid})
+    res.status(200).json(allPosts)
+  } catch (error) {
+    console.log('500', error);
     res.status(500).json({ message: `${error}` })
   }
 })

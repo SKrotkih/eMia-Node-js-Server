@@ -1,15 +1,17 @@
+
+// mongoose docs: https://mongoosejs.com/docs/guide.html
+
 const {Schema, model, Types} = require('mongoose')
 
 const schema = new Schema({
   email: {type: String, required: true, unique: true},
+  password: {type: String, required: true},
+  username: {type: String},
   address: {type: String},
-  email: {type: String},
   gender: {type: Number},
   tokenAndroid: {type: String},
   tokenIOS: {type: String},
-  username: {type: String},
   yearbirth: {type: Number},
-  password: {type: String, required: true},
   posts: [{ type: Types.ObjectId, ref: 'Post' }]
 })
 
