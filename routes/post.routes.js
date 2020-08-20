@@ -1,6 +1,8 @@
 const {Router} = require('express')
 const Post = require('../models/Post')
+const User = require('../models/User')
 const router = Router()
+const {Types} = require('mongoose')
 
 // Get all posts
 // TODO: add auth parameter ', auth'. Should be:
@@ -8,6 +10,10 @@ const router = Router()
 router.get('/posts', async (req, res) => {
   try {
     const allPosts = await Post.find({})
+    // the map does not work in this case:
+    for (let i = 0; i < allPosts.length; i++) {
+      allPosts[i].owner = await User.findById(allPosts[i].uid);
+    }
     res.status(200).json(allPosts)
   } catch (error) {
     console.log('500', error);
@@ -19,6 +25,9 @@ router.get('/posts/:uid', async (req, res) => {
   try {
     const uid = req.params.uid;
     const allPosts = await Post.find({uid: uid})
+    for (let i = 0; i < allPosts.length; i++) {
+      allPosts[i].owner = await User.findById(allPosts[i].uid);
+    }
     res.status(200).json(allPosts)
   } catch (error) {
     console.log('500', error);
@@ -36,6 +45,8 @@ router.post('/post', async (req, res) => {
 
     const postObj = new Post(post);
 
+    postObj.owner = Types.ObjectId(post.uid);
+
     console.log('obj post=', postObj);
 
     await postObj.save();
@@ -51,28 +62,16 @@ router.post('/post', async (req, res) => {
   }
 })
 
-// Get all posts for user Id
-router.get('/', async (req, res) => {
-  try {
-    const usersPosts = await Post.find({ owner: req.user.userId })
-    res.status(200).json(usersPosts)
-  } catch (error) {
-
-    console.log('500', error);
-
-    res.status(500).json({ message: `${error}` })
-  }
-})
-
 // Get Post by post Id
 router.get('/:id', async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id)
+    const postId = req.params.id;
+    const post = await Post.findById(postId)
+    const uid = post.uid;
+    post.owner = await User.findById(uid);
     res.status(200).json(post)
   } catch (error) {
-
     console.log('500', error);
-
     res.status(500).json({ message: `${error}` })
   }
 })
