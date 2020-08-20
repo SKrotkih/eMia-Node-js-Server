@@ -4,9 +4,11 @@ const User = require('../models/User')
 const router = Router()
 const {Types} = require('mongoose')
 
-// Get all posts
 // TODO: add auth parameter ', auth'. Should be:
 // router.get('/posts', auth, async (req, res) => {
+
+// Get all posts
+// GET /api/posts/posts
 router.get('/posts', async (req, res) => {
   try {
     const allPosts = await Post.find({})
@@ -21,6 +23,8 @@ router.get('/posts', async (req, res) => {
   }
 })
 
+// Get all User's posts for User ID
+// GET /api/posts/posts/:uid
 router.get('/posts/:uid', async (req, res) => {
   try {
     const uid = req.params.uid;
@@ -35,34 +39,8 @@ router.get('/posts/:uid', async (req, res) => {
   }
 })
 
-router.post('/post', async (req, res) => {
-  try {
-    console.log("add post");
-
-    const {post} = req.body
-
-    console.log('source', post);
-
-    const postObj = new Post(post);
-
-    postObj.owner = Types.ObjectId(post.uid);
-
-    console.log('obj post=', postObj);
-
-    await postObj.save();
-
-    console.log("SAVED!!!");
-
-    res.status(200).json(postObj);
-  } catch (error) {
-
-    console.log('500', error);
-
-    res.status(500).json({ message: `${error}` })
-  }
-})
-
-// Get Post by post Id
+// Get post for Post ID
+// GET /api/posts/:id
 router.get('/:id', async (req, res) => {
   try {
     const postId = req.params.id;
@@ -72,6 +50,46 @@ router.get('/:id', async (req, res) => {
     res.status(200).json(post)
   } catch (error) {
     console.log('500', error);
+    res.status(500).json({ message: `${error}` })
+  }
+})
+
+// Add/Update post
+// POST /api/posts/post
+router.post('/post', async (req, res) => {
+  try {
+    console.log("add/replace post");
+
+    const {post} = req.body
+
+    console.log('source', post);
+    const postId = post._id;
+
+    if (postId) {
+      // Update post
+      const resUpdate = await Post.replaceOne({_id: postId}, post);
+
+      console.log(`UPDATED!!! [post ID=${postId}; ${resUpdate.n}; ${resUpdate.nModified}]`);
+
+      res.status(200).json(post);
+    } else {
+      // Add new post
+      const postObj = new Post(post);
+
+      postObj.owner = Types.ObjectId(post.uid);
+
+      console.log('obj post=', postObj);
+
+      await postObj.save();
+
+      console.log("SAVED!!!");
+
+      res.status(200).json(postObj);
+    }
+  } catch (error) {
+
+    console.log('500', error);
+
     res.status(500).json({ message: `${error}` })
   }
 })
