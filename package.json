@@ -27,7 +27,10 @@
     "express-validator": "^6.3.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.1",
-    "shortid": "^2.2.15"
+    "shortid": "^2.2.15",
+    "cloudinary": "^1.11.0",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0"
   },
   "devDependencies": {
     "concurrently": "^5.0.2",

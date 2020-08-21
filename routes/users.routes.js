@@ -1,6 +1,5 @@
 const {Router} = require('express')
 const User = require('../models/User')
-const ObjectId = require("mongoose");
 const router = Router()
 
 // Get User data for id
