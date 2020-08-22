@@ -22,11 +22,9 @@ router.post(
         .all(promises)
         .then(results => res.status(200).json(results))
         .catch((err) => res.status(400).json(err))
-    } catch (e) {
-
-      console.log(`REGISTER: 500 Something went wrong. Please ry it again.`);
-
-      res.status(500).json({message: 'Something went wrong. Please ry it again.'})
+    } catch (error) {
+      console.log(`Upload Image error: ${error}`;
+      res.status(500).json(error)
     }
   }
 )
