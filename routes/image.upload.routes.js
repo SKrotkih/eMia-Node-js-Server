@@ -16,14 +16,25 @@ router.post(
   [],
   async (req, res) => {
     try {
+
+      console.log(req);
+
       const values = Object.values(req.files)
-      const promises = values.map(image => cloudinary.uploader.upload(image.path))
+
+      console.log(values);
+
+      const promises = values.map((image) => {
+
+        console.log(image.path);
+
+        cloudinary.uploader.upload(image.path);
+      })
       Promise
         .all(promises)
         .then(results => res.status(200).json(results))
         .catch((err) => res.status(400).json(err))
     } catch (error) {
-      console.log(`Upload Image error: ${error}`;
+      console.log(`Upload Image error: ${error}`);
       res.status(500).json(error)
     }
   }
