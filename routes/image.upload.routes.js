@@ -3,21 +3,14 @@ const {Router} = require('express')
 const router = Router()
 const cloudinary = require('cloudinary')
 
-// I save images in Cloudinary server
-// https://cloudinary.com/users/register/free
-// Create file .env in the project root folder:
-// CLOUD_NAME=your_cloud_name
-// API_KEY=your_cloud_key
-// API_SECRET=your_cloud_secret
-
-// http://localhost:5000/api/images/upload
-router.post(
-  '/upload',
-  [],
-  async (req, res) => {
+// Example: http://localhost:5000/api/images/upload
+router.post('/upload', async (req, res) => {
     try {
 
-      console.log(req);
+      console.log('HEADERS');
+      console.log(req.headers);
+      console.log('BODY');
+      console.log(req.body);
 
       const values = Object.values(req.files)
 

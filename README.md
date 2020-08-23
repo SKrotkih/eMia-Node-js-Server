@@ -10,5 +10,5 @@ It developed with using:
 ## Run this locally
 - Rename .env.example to .env
 - Fill in your Cloudinary credentials in .env
-- npm start
+- node app.js
 - Update the apiUrl in frontend to point to the server.

@@ -4,14 +4,14 @@ const path = require('path')
 const mongoose = require('mongoose')
 
 const app = express()
-
-app.use(express.json({ extended: true }))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
+app.use(require('body-parser').json());
 
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/posts', require('./routes/post.routes'))
 app.use('/api/users', require('./routes/users.routes'))
 app.use('/api/images', require('./routes/image.upload.routes'))
-app.use('/t', require('./routes/redirect.routes'))
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static(path.join(__dirname, 'client', 'build')))
@@ -32,9 +32,12 @@ async function start() {
     })
     app.listen(PORT, () => console.log(`App has been started on port ${PORT}...`))
   } catch (e) {
-    console.log('Server Error', e.message)
-    process.exit(1)
+    throw e;
   }
 }
 
 start()
+  .catch((error) => {
+    console.log('Server Error', error.message)
+    process.exit(1)
+  })
