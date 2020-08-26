@@ -19,6 +19,7 @@ router.get(
   }
 )
 
+// Update User data
 // http://localhost:5000/api/users/user
 router.post(
   '/user',
