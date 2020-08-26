@@ -1,13 +1,14 @@
 const express = require('express')
-const config = require('config')
 const path = require('path')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
+const cloudinary = require('cloudinary').v2;
 
 const app = express()
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }));
-app.use(require('body-parser').json());
 
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json({ limit: '15MB' }))
+app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/posts', require('./routes/post.routes'))
 app.use('/api/users', require('./routes/users.routes'))
@@ -19,13 +20,22 @@ if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'about.html'))
   })
+} else {
+  require('dotenv').config();
+  console.log('api_key=', process.env.api_key);
 }
 
-const PORT = config.get('port') || 5000
+const PORT = process.env.port || 5000;
+
+cloudinary.config({
+  cloud_name: process.env.cloud_name,
+  api_key: process.env.api_key,
+  api_secret: process.env.api_secret,
+});
 
 async function start() {
   try {
-    await mongoose.connect(config.get('mongoUri'), {
+    await mongoose.connect(process.env.mongoUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true

@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken')
-const config = require('config')
 
 module.exports = (req, res, next) => {
   if (req.method === 'OPTIONS') {
@@ -14,7 +13,7 @@ module.exports = (req, res, next) => {
       return res.status(401).json({ message: 'Need auth token on the header' })
     }
 
-    const decoded = jwt.verify(token, config.get('jwtSecret'))
+    const decoded = jwt.verify(token, process.env.jwtSecret);
     req.user = decoded
     next()
 
