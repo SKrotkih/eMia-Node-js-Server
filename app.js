@@ -1,3 +1,10 @@
+/**
+ * Sample Node.js server for React Native App.
+ * https://github.com/SKrotkih/eMia-Node-js-Server
+ *
+ * @format
+ * @flow
+ */
 const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
@@ -9,10 +16,10 @@ const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json({ limit: '15MB' }))
 app.use(express.urlencoded({ extended: true }));
-app.use('/api/auth', require('./routes/auth.routes'))
-app.use('/api/posts', require('./routes/post.routes'))
-app.use('/api/users', require('./routes/users.routes'))
-app.use('/api/images', require('./routes/image.upload.routes'))
+app.use('/api/auth', require('./routes/auth.router'))
+app.use('/api/posts', require('./routes/post.router'))
+app.use('/api/users', require('./routes/users.router'))
+app.use('/api/images', require('./routes/image.upload.router'))
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static(path.join(__dirname, 'client', 'build')))

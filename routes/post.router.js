@@ -1,3 +1,10 @@
+/**
+ * Sample Node.js server for React Native App.
+ * https://github.com/SKrotkih/eMia-Node-js-Server
+ *
+ * @format
+ * @flow
+ */
 const {Router} = require('express')
 const Post = require('../models/Post')
 const User = require('../models/User')
@@ -7,8 +14,10 @@ const {Types} = require('mongoose')
 // TODO: add auth parameter ', auth'. Should be:
 // router.get('/posts', auth, async (req, res) => {
 
-// Get all posts
-// GET /api/posts/posts
+/**
+  Get all posts
+  GET /api/posts/posts
+ */
 router.get('/posts', async (req, res) => {
   try {
     const allPosts = await Post.find({})
@@ -23,8 +32,10 @@ router.get('/posts', async (req, res) => {
   }
 })
 
-// Get all User's posts for User ID
-// GET /api/posts/posts/:uid
+/**
+  Get all User's posts for User ID
+  GET /api/posts/posts/:uid
+ */
 router.get('/posts/:uid', async (req, res) => {
   try {
     const uid = req.params.uid;
@@ -39,8 +50,10 @@ router.get('/posts/:uid', async (req, res) => {
   }
 })
 
-// Get post for Post ID
-// GET /api/posts/:id
+/**
+  Get post for Post ID
+  GET /api/posts/:id
+ */
 router.get('/:id', async (req, res) => {
   try {
     const postId = req.params.id;
@@ -54,8 +67,10 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-// Add/Update post
-// POST /api/posts/post
+/**
+  Add/Update post
+  POST /api/posts/post
+ */
 router.post('/post', async (req, res) => {
   try {
     console.log("add/replace post");

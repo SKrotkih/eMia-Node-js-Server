@@ -1,6 +1,15 @@
 
-// mongoose docs: https://mongoosejs.com/docs/guide.html
+/**
+ * Sample Node.js server for React Native App.
+ * https://github.com/SKrotkih/eMia-Node-js-Server
+ *
+ * @format
+ * @flow
+ */
 
+/**
+ Post. Mongo DB Schema.
+ */
 const {Schema, model, Types} = require('mongoose')
 
 const schema = new Schema({

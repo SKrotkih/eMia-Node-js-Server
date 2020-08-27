@@ -1,3 +1,16 @@
+/**
+ * Sample React Native App
+ * https://github.com/SKrotkih/eMia-Node-js-Server
+ *
+ * @format
+ * @flow
+ */
+
+/**
+ * Code Example
+ * @type {module:http}
+ */
+
 const http = require("http");
 const fs = require('fs').promises;
 

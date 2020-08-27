@@ -1,3 +1,10 @@
+/**
+ * Sample Node.js server for React Native App.
+ * https://github.com/SKrotkih/eMia-Node-js-Server
+ *
+ * @format
+ * @flow
+ */
 const {Router} = require('express')
 const User = require('../models/User')
 const router = Router()
