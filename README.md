@@ -5,17 +5,19 @@ is server-side of the React Native [eMia-React-Native](https://github.com/SKrotk
 ## Introduction
 
 The back end was developed with using:
-- [Node.js](https://nodejs.org/en/)
+- [NodeJS](https://nodejs.org/en/)
 - [Express](https://expressjs.com/) Framework
-- [Mongo DB](https://www.mongodb.com) No SQL Database. Used to store users info and users posts.
+- [MongoDB](https://www.mongodb.com) No SQL Database. Used to store users info and users posts.
 - [Cloudinary](https://cloudinary.com). Used to store images.
 
 ## Installation
 
 - Download or clone content to a local directory
+- Install NodeJS and Yarn or NPM.
+- Start Terminal. Go to the directory. Run 'yarn' on 'npm install'.
 - Rename .env.example to .env
 
-- [Mongo DB](https://www.mongodb.com)
+- [MongoDB](https://www.mongodb.com)
     - create Project
     - create Cluster
     - connect to your new Cluster
