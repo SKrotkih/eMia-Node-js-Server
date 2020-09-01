@@ -1,10 +1,3 @@
-/**
- * Sample Node.js server for React Native App.
- * https://github.com/SKrotkih/eMia-Node-js-Server
- *
- * @format
- * @flow
- */
 const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
@@ -21,18 +14,17 @@ app.use('/api/posts', require('./routes/post.router'))
 app.use('/api/users', require('./routes/users.router'))
 app.use('/api/images', require('./routes/image.upload.router'))
 
-if (process.env.NODE_ENV === 'production') {
-  app.use('/', express.static(path.join(__dirname, 'client', 'build')))
+const isItProduction = process.env.NODE_ENV === 'production';
 
+if (isItProduction) {
+  app.use('/', express.static(path.join(__dirname, 'client', 'build')))
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'about.html'))
   })
-} else {
-  require('dotenv').config();
-  console.log('api_key=', process.env.api_key);
 }
 
-const PORT = process.env.port || 5000;
+require('dotenv').config();
+console.log('api_key=', process.env.api_key);
 
 cloudinary.config({
   cloud_name: process.env.cloud_name,
@@ -47,7 +39,18 @@ async function start() {
       useUnifiedTopology: true,
       useCreateIndex: true
     })
-    app.listen(PORT, () => console.log(`App has been started on port ${PORT}...`))
+    if (isItProduction) {
+      const http = require("http");
+      const server = http.createServer((req, res) => {
+        res.setHeader('Content-Type', 'text/html');
+        res.setHeader('X-Foo', 'bar');
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.end('ok');
+      });
+    } else {
+      const PORT = process.env.port || 5000;
+      app.listen(PORT, () => console.log(`App has been started on port ${PORT}...`))
+    }
   } catch (e) {
     throw e;
   }
@@ -58,3 +61,6 @@ start()
     console.log('Server Error', error.message)
     process.exit(1)
   })
+
+
+

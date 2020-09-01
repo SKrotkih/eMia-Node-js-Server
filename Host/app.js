@@ -1,9 +1,5 @@
 /**
- * Sample React Native App
- * https://github.com/SKrotkih/eMia-Node-js-Server
- *
- * @format
- * @flow
+ By the provider provided default code for starting server side (on Node.js)
  */
 
 const http = require('http');

@@ -1,12 +1,12 @@
 # eMia-Node-js-Server
 
-is server-side of the React Native [eMia-React-Native](https://github.com/SKrotkih/eMia-React-Native) application. 
+It is a server-side of the React Native [eMia-React-Native](https://github.com/SKrotkih/eMia-React-Native) application. 
 
 ## Introduction
 
 The back end was developed with using:
 - [NodeJS](https://nodejs.org/en/)
-- [Express](https://expressjs.com/) Framework
+- [Express](https://expressjs.com/)
 - [MongoDB](https://www.mongodb.com) No SQL Database. Used to store users info and users posts.
 - [Cloudinary](https://cloudinary.com). Used to store images.
 
@@ -15,7 +15,7 @@ The back end was developed with using:
 - Download or clone content to a local directory
 - Install NodeJS and Yarn or NPM.
 - Start Terminal. Go to the directory. Run 'yarn' on 'npm install'.
-- Rename .env.example to .env
+- Rename .env.example to .env. Fill in .env file your values (see the MongoDB section).
 
 - [MongoDB](https://www.mongodb.com)
     - create Project
@@ -27,9 +27,8 @@ The back end was developed with using:
 
 - [Cloudinary](https://cloudinary.com) 
 
-
 - Update the apiUrl in your frontend to point to the server.
 
 #### Run this locally
 
-- node app.js
+- node index.js

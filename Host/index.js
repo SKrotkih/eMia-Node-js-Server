@@ -2,13 +2,7 @@
  * Sample React Native App
  * https://github.com/SKrotkih/eMia-Node-js-Server
  *
- * @format
- * @flow
- */
-
-/**
- * Code Example
- * @type {module:http}
+ * Test code for server on host
  */
 
 const http = require("http");
@@ -52,7 +46,7 @@ const requestListener = function (req, res) {
 };
 const server = http.createServer(requestListener);
 
-fs.readFile(__dirname + "/index.html")
+fs.readFile(__dirname + "/about.html")
   .then(contents => {
     indexFile = contents;
     server.listen(port, host, () => {
@@ -60,6 +54,6 @@ fs.readFile(__dirname + "/index.html")
     });
   })
   .catch(err => {
-    console.error(`Could not read index.html file: ${err}`);
+    console.error(`Could not read about.html file: ${err}`);
     process.exit(1);
   });
