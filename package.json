@@ -2,14 +2,14 @@
   "name": "eMia",
   "version": "0.1.1",
   "description": "eMia React Native. Server side",
-  "main": "index.js",
+  "main": "app.js",
   "author": "Sergey Krotkih <sergey.krotkih@gmail.com>",
   "license": "ISC",
   "scripts": {
     "start": "node ./bin/www",
-    "startserver": "cross-env NODE_ENV=production node index.js",
+    "startserver": "cross-env NODE_ENV=production node app.js",
     "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
-    "server": "nodemon index.js",
+    "server": "nodemon app.js",
     "client": "npm run start --prefix client",
     "client:install": "npm install --prefix client",
     "client:build": "npm run build --prefix client"

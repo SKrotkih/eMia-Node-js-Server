@@ -31,4 +31,4 @@ The back end was developed with using:
 
 #### Run this locally
 
-- node index.js
+- node app.js
