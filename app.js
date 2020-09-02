@@ -25,6 +25,7 @@ if (isItProduction) {
 
 require('dotenv').config();
 console.log('api_key=', process.env.api_key);
+console.log('mongoUri=', process.env.mongoUri);
 
 cloudinary.config({
   cloud_name: process.env.cloud_name,
