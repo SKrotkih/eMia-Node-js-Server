@@ -24,8 +24,6 @@ if (isItProduction) {
 }
 
 require('dotenv').config();
-console.log('api_key=', process.env.api_key);
-console.log('mongoUri=', process.env.mongoUri);
 
 cloudinary.config({
   cloud_name: process.env.cloud_name,
@@ -40,18 +38,8 @@ async function start() {
       useUnifiedTopology: true,
       useCreateIndex: true
     })
-    if (isItProduction) {
-      const http = require("http");
-      const server = http.createServer((req, res) => {
-        res.setHeader('Content-Type', 'text/html');
-        res.setHeader('X-Foo', 'bar');
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.end('ok');
-      });
-    } else {
-      const PORT = process.env.port || 5000;
-      app.listen(PORT, () => console.log(`App has been started on port ${PORT}...`))
-    }
+    const PORT = process.env.port || 5000;
+    app.listen(PORT, () => console.log(`App has been started on port ${PORT}...`))
   } catch (e) {
     throw e;
   }
